@@ -6,24 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import java.util.Date;
-import java.util.List;
-
 @EntityScan
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTaskEntity {
-    private int id;
-
+public class CreateNoteEntity {
+    private Integer id;
     private String title;
-
-    private String details;
-
-    private Date deadline;
-
-    private Boolean completed;
-
-    private List<CreateNoteEntity> notes;
+    private String description;
 }

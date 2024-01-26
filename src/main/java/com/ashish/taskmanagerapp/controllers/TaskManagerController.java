@@ -3,7 +3,9 @@ package com.ashish.taskmanagerapp.controllers;
 import com.ashish.taskmanagerapp.dtos.CreateTaskDto;
 import com.ashish.taskmanagerapp.dtos.ErrorResponseDto;
 import com.ashish.taskmanagerapp.dtos.UpdateTaskDto;
+import com.ashish.taskmanagerapp.entities.CreateNoteEntity;
 import com.ashish.taskmanagerapp.entities.CreateTaskEntity;
+import com.ashish.taskmanagerapp.services.NoteService;
 import com.ashish.taskmanagerapp.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +13,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/task")
 public class TaskManagerController {
 
     private final TaskService taskService;
+    private final NoteService noteService;
 
-    public TaskManagerController(TaskService taskService) {
+    public TaskManagerController(TaskService taskService, NoteService noteService) {
         this.taskService = taskService;
+        this.noteService = noteService;
     }
 
     @GetMapping("/info")
@@ -52,6 +57,8 @@ public class TaskManagerController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<CreateTaskEntity> getTaskById(@PathVariable(value = "id") Integer id){
         CreateTaskEntity response = taskService.getTaskById(id);
+        List<CreateNoteEntity> notes = noteService.getAllNotes(id);
+        response.setNotes(notes);
         if(response==null){
             return ResponseEntity.notFound().build();
         }
