@@ -17,7 +17,7 @@ public class TaskService {
     private final SimpleDateFormat deadlineFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public CreateTaskEntity createTask(String title,String details,String deadline) throws ParseException {
-        CreateTaskEntity createTaskEntity = new CreateTaskEntity(id,title,details,deadlineFormatter.parse(deadline),false,new ArrayList<>());
+        CreateTaskEntity createTaskEntity = new CreateTaskEntity(id,title,details,deadlineFormatter.parse(deadline),false);
         taskEntities.add(createTaskEntity);
         id++;
         return  createTaskEntity;

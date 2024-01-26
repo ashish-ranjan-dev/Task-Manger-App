@@ -2,11 +2,13 @@ package com.ashish.taskmanagerapp.controllers;
 
 import com.ashish.taskmanagerapp.dtos.CreateTaskDto;
 import com.ashish.taskmanagerapp.dtos.ErrorResponseDto;
+import com.ashish.taskmanagerapp.dtos.TaskResponseDto;
 import com.ashish.taskmanagerapp.dtos.UpdateTaskDto;
 import com.ashish.taskmanagerapp.entities.CreateNoteEntity;
 import com.ashish.taskmanagerapp.entities.CreateTaskEntity;
 import com.ashish.taskmanagerapp.services.NoteService;
 import com.ashish.taskmanagerapp.services.TaskService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,8 @@ public class TaskManagerController {
 
     private final TaskService taskService;
     private final NoteService noteService;
+
+    private ModelMapper mapper = new ModelMapper();
 
     public TaskManagerController(TaskService taskService, NoteService noteService) {
         this.taskService = taskService;
@@ -55,14 +59,15 @@ public class TaskManagerController {
      * get all tasks by task-id -> GET -> localhost:4000/task/{taskId}
      */
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CreateTaskEntity> getTaskById(@PathVariable(value = "id") Integer id){
+    public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable(value = "id") Integer id){
         CreateTaskEntity response = taskService.getTaskById(id);
         List<CreateNoteEntity> notes = noteService.getAllNotes(id);
-        response.setNotes(notes);
+        TaskResponseDto taskResponseDto = mapper.map(response,TaskResponseDto.class);
+        taskResponseDto.setNotes(notes);
         if(response==null){
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(taskResponseDto,HttpStatus.OK);
     }
 
     /**

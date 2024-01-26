@@ -1,20 +1,19 @@
-package com.ashish.taskmanagerapp.entities;
+package com.ashish.taskmanagerapp.dtos;
 
+import com.ashish.taskmanagerapp.entities.CreateNoteEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.Date;
 import java.util.List;
 
-@EntityScan
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTaskEntity {
+public class TaskResponseDto {
     private int id;
 
     private String title;
@@ -24,4 +23,6 @@ public class CreateTaskEntity {
     private Date deadline;
 
     private Boolean completed;
+
+    private List<CreateNoteEntity> notes;
 }
