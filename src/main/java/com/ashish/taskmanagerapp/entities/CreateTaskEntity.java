@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import java.util.Date;
+
 @EntityScan
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class CreateTaskEntity {
 
     private String details;
 
-    private String deadline;
+    private Date deadline;
 
     private Boolean completed;
 }

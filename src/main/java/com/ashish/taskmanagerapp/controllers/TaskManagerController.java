@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 @RestController
@@ -29,7 +30,7 @@ public class TaskManagerController {
      * receives createTaskDto and sends appropriate response
      */
     @PostMapping(value = "")
-    public ResponseEntity<CreateTaskEntity> createTask(@RequestBody CreateTaskDto createTaskReq){
+    public ResponseEntity<CreateTaskEntity> createTask(@RequestBody CreateTaskDto createTaskReq) throws ParseException {
         CreateTaskEntity response = taskService.createTask(createTaskReq.getTitle(), createTaskReq.getDetails(), createTaskReq.getDeadline());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -53,6 +54,25 @@ public class TaskManagerController {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<CreateTaskEntity> updateTaskById(@PathVariable(value = "id") Integer id,@RequestBody CreateTaskDto createTaskReq) throws ParseException {
+        CreateTaskEntity response = taskService.updateTaskById(id,createTaskReq.getTitle(), createTaskReq.getDetails(), createTaskReq.getDeadline());
+        if(response==null){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String>
+    handleErrors(Exception e){
+        if(e instanceof ParseException){
+            return ResponseEntity.badRequest().body("Invalid Date Format");
+        }
+        e.printStackTrace();
+        return ResponseEntity.internalServerError().body("Internal Server Error");
     }
 
 }

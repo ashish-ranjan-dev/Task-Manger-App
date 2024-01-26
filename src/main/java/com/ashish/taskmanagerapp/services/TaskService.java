@@ -3,6 +3,8 @@ package com.ashish.taskmanagerapp.services;
 import com.ashish.taskmanagerapp.entities.CreateTaskEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @Service
@@ -12,8 +14,10 @@ public class TaskService {
 
     private final ArrayList<CreateTaskEntity> taskEntities = new ArrayList<>();
 
-    public CreateTaskEntity createTask(String title,String details,String deadline){
-        CreateTaskEntity createTaskEntity = new CreateTaskEntity(id,title,details,deadline,false);
+    private final SimpleDateFormat deadlineFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+    public CreateTaskEntity createTask(String title,String details,String deadline) throws ParseException {
+        CreateTaskEntity createTaskEntity = new CreateTaskEntity(id,title,details,deadlineFormatter.parse(deadline),false);
         taskEntities.add(createTaskEntity);
         id++;
         return  createTaskEntity;
@@ -30,5 +34,22 @@ public class TaskService {
             }
         }
         return null;
+    }
+
+    public CreateTaskEntity updateTaskById(Integer id,String title,String details,String deadline) throws ParseException {
+        CreateTaskEntity taskEntity = getTaskById(id);
+        if(taskEntity==null)return null;
+
+        if(title!=null){
+            taskEntity.setTitle(title);
+        }
+        if(details!=null){
+            taskEntity.setDetails(details);
+        }
+        if(deadline!=null){
+            taskEntity.setDeadline(deadlineFormatter.parse(deadline));
+        }
+
+        return  taskEntity;
     }
 }
