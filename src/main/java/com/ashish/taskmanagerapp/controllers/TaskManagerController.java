@@ -2,6 +2,7 @@ package com.ashish.taskmanagerapp.controllers;
 
 import com.ashish.taskmanagerapp.dtos.CreateTaskDto;
 import com.ashish.taskmanagerapp.dtos.ErrorResponseDto;
+import com.ashish.taskmanagerapp.dtos.UpdateTaskDto;
 import com.ashish.taskmanagerapp.entities.CreateTaskEntity;
 import com.ashish.taskmanagerapp.services.TaskService;
 import org.springframework.http.HttpStatus;
@@ -57,9 +58,17 @@ public class TaskManagerController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    /**
+     * updates a given task by id -> Patch -> localhost:4000/task/{id}
+     *
+     * @param id
+     * @param updateTaskReq
+     * @return
+     * @throws ParseException
+     */
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<CreateTaskEntity> updateTaskById(@PathVariable(value = "id") Integer id,@RequestBody CreateTaskDto createTaskReq) throws ParseException {
-        CreateTaskEntity response = taskService.updateTaskById(id,createTaskReq.getTitle(), createTaskReq.getDetails(), createTaskReq.getDeadline());
+    public ResponseEntity<CreateTaskEntity> updateTaskById(@PathVariable(value = "id") Integer id,@RequestBody UpdateTaskDto updateTaskReq) throws ParseException {
+        CreateTaskEntity response = taskService.updateTaskById(id, updateTaskReq.getDetails(), updateTaskReq.getDeadline(),updateTaskReq.getCompleted());
         if(response==null){
             return ResponseEntity.notFound().build();
         }
