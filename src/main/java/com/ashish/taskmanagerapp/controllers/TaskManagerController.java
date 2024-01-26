@@ -30,7 +30,7 @@ public class TaskManagerController {
      */
     @PostMapping(value = "")
     public ResponseEntity<CreateTaskEntity> createTask(@RequestBody CreateTaskDto createTaskReq){
-        CreateTaskEntity response = taskService.createTask(createTaskReq.getTitle(), createTaskReq.getDetails(), createTaskReq.getDate());
+        CreateTaskEntity response = taskService.createTask(createTaskReq.getTitle(), createTaskReq.getDetails(), createTaskReq.getDeadline());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -49,6 +49,9 @@ public class TaskManagerController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<CreateTaskEntity> getTaskById(@PathVariable(value = "id") Integer id){
         CreateTaskEntity response = taskService.getTaskById(id);
+        if(response==null){
+            return ResponseEntity.notFound().build();
+        }
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 

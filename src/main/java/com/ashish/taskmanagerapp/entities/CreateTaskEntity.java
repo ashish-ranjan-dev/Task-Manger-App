@@ -18,5 +18,7 @@ public class CreateTaskEntity {
 
     private String details;
 
-    private String date;
+    private String deadline;
+
+    private Boolean completed;
 }
