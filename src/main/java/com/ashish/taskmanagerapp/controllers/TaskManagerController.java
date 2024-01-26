@@ -1,6 +1,7 @@
 package com.ashish.taskmanagerapp.controllers;
 
 import com.ashish.taskmanagerapp.dtos.CreateTaskDto;
+import com.ashish.taskmanagerapp.dtos.ErrorResponseDto;
 import com.ashish.taskmanagerapp.entities.CreateTaskEntity;
 import com.ashish.taskmanagerapp.services.TaskService;
 import org.springframework.http.HttpStatus;
@@ -66,13 +67,13 @@ public class TaskManagerController {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String>
+    public ResponseEntity<ErrorResponseDto>
     handleErrors(Exception e){
         if(e instanceof ParseException){
-            return ResponseEntity.badRequest().body("Invalid Date Format");
+            return ResponseEntity.badRequest().body(new ErrorResponseDto("Invalid Date Format"));
         }
         e.printStackTrace();
-        return ResponseEntity.internalServerError().body("Internal Server Error");
+        return ResponseEntity.internalServerError().body(new ErrorResponseDto("Internal Server Error"));
     }
 
 }
