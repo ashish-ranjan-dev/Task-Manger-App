@@ -10,4 +10,16 @@
 - Update a **task** - *details*, *deadline*, *completed-status*
 - Add a *note* to a particular task with *title* and *description*
 - Fetch all **notes** for a particular **task**
-- Fetch a particular **note** for a **task** 
+- Fetch a particular **note** for a **task**
+
+
+## Postman Api
+
+![alt text](PostmanApi/img.png) 
+![alt text](PostmanApi/img_1.png)
+![alt text](PostmanApi/img_2.png)
+![alt text](PostmanApi/img_3.png)
+![alt text](PostmanApi/img_3.png)
+![alt text](PostmanApi/img_4.png)
+![alt text](PostmanApi/img_5.png)
+![alt text](PostmanApi/img_6.png)
