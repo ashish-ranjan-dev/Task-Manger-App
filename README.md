@@ -1,7 +1,5 @@
 # Task Manager Backend Application
 
----
-
 ## A Simple Task managing app for adding various tasks and notes.
 
 **Key Features**
